@@ -1,0 +1,13 @@
+
+.fileButton {
+ style="padding: 1px 1px;
+ color: #000;
+ background-color: #ccc;
+ cursor: pointer;
+}
+.fileCanvas{
+ background-color: #fff;
+}
+input[type="text"] {
+  font-size: 16px;
+}
