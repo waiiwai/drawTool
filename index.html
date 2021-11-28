@@ -4,72 +4,79 @@
   <link rel="stylesheet" href="./css/dots.css" />
 </head>
 <body onload="init()" style="background-color: rgb( 180, 180, 180);">
-  <div id="main" style="position:absolute; left:200px; top:100px;">
-    <div id="drawArea" style="position: absolute; top: 0px; left:0px;">
+  <div id="main" style="position:absolute; left:20px; top:100px;">
+    <div id="drawArea" style="position: absolute; top: 0px; left:350px;">
       <canvas id="bgCanvas" style="background-color: rgb( 255, 255, 255); position: absolute; top: 0px; left:0px; z-index:0;" ></canvas>
       <canvas id="drawCanvas" style="background-color: rgba( 255, 255, 255, 0); position: absolute; top: 0px; left:0px; z-index:100;"></canvas>
       <canvas id="drawSelect" width="100px" height="100px" style="background-color: rgba( 255, 255, 255, 0); position: absolute; top: 0px; left:0px; z-index:1000;"></canvas>
     </div>
-    <div id="viewArea" style="position: absolute; top: 0px; left:650px;">
-      <div id="viewx2Area" style=" position: absolute; top: 0px; left:0px;">
-        <canvas id="viewBgCanvas" style="background-color: rgba( 255, 255, 255, 1); position: absolute; top: 0px; left:0px; z-index:0;"></canvas>
-        <canvas id="viewCanvas" style="background-color: rgba( 255, 255, 255, 0); position: absolute; top: 0px; left:0px; z-index:1000;"></canvas>
+    <div id="toolArea" style="position: absolute; top: 0px; left:0px;">
+      <div id="viewArea" style="position: absolute; top: 0px; left:0px;">
+        <div id="viewx2Area" style=" position: absolute; top: 0px; left:0px;">
+          <canvas id="viewBgCanvas" style="background-color: rgba( 255, 255, 255, 1); position: absolute; top: 0px; left:0px; z-index:0;"></canvas>
+          <canvas id="viewCanvas" style="background-color: rgba( 255, 255, 255, 0); position: absolute; top: 0px; left:0px; z-index:1000;"></canvas>
+        </div>
+        <div id="viewx1Area" style="position: absolute; top: 0px; left:80px;">
+          <canvas id="viewBgCanvas2" style="background-color: rgba( 255, 255, 255, 1); position: absolute; top: 0px; left:0px; z-index:0;"></canvas>
+          <canvas id="viewCanvas2" style="background-color: rgba( 255, 255, 255, 0); position: absolute; top: 0px; left:0px; z-index:1000;"></canvas>
+        </div>
       </div>
-      <div id="viewx1Area" style="position: absolute; top: 0px; left:80px;">
-        <canvas id="viewBgCanvas2" style="background-color: rgba( 255, 255, 255, 1); position: absolute; top: 0px; left:0px; z-index:0;"></canvas>
-        <canvas id="viewCanvas2" style="background-color: rgba( 255, 255, 255, 0); position: absolute; top: 0px; left:0px; z-index:1000;"></canvas>
+      <div id="colorPicker" style="position: absolute; top: 80px; left:0px;">
+        <canvas id="selectedColorCanvas" width="200px" height="200px" style="background-color: rgba( 0, 0, 0, 1); position: absolute; top: 0px; left:0px; z-index:980;"></canvas>
+        <div id="hue" style="position: absolute; top: 00px; left:0px;">
+          <canvas id="hueCanvas" width="200px" height="200px" style="background-color: rgba( 255, 255, 255, 0); position: absolute; top: 0px; left:0px; z-index:990;"></canvas>
+          <canvas id="hueSelect" width="20px" height="20px" style="background-color: rgba( 255, 255, 255, 0); position: absolute; top: 0px; left:0px; z-index:991;"></canvas>
+        </div>
+        <div id="sv" style="position: absolute; top: 50px; left:50px;">
+          <canvas id="svCanvas_1" width="104px" height="104px" style="background-color: rgba( 0, 0, 0, 1); position: absolute; top: -2px; left: -2px; z-index:998;"></canvas>
+          <canvas id="svCanvas_2" width="102px" height="102px" style="background-color: rgba( 255, 255, 255, 1); position: absolute; top: -1px; left:-1px; z-index:999;"></canvas>
+          <canvas id="svCanvas" width="100px" height="100px" style="background-color: rgba( 0, 0, 0, 1); position: absolute; top: 0px; left:0px; z-index:1000;"></canvas>
+          <canvas id="svSelect" width="10px" height="10px" style="background-color: rgba( 0, 0, 0, 0); position: absolute; top: 0px; left:0px; z-index:1001;"></canvas>
+        </div>
+        <table style="position: absolute; top: 00px; left:200px;">
+          <tr>
+            <td colspan=3>HEX</td>
+          </tr>
+          <tr>
+            <td colspan=3><input type="text" id="rgb_hex" style="width:75px"></td>
+          </tr>
+          <tr>
+            <td colspan=3>RGB</td>
+          </tr>
+          <tr>
+            <td><input type="text" id="rgb_r" style="width:40px"></td>
+            <td><input type="text" id="rgb_g" style="width:40px"></td>
+            <td><input type="text" id="rgb_b" style="width:40px"></td>
+          </tr>
+          <tr>
+            <td colspan=3>HSV</td>
+          </tr>
+          <tr>
+            <td><input type="text" id="hsv_h" style="width:40px"></td>
+            <td><input type="text" id="hsv_s" style="width:40px"></td>
+            <td><input type="text" id="hsv_v" style="width:40px"></td>
+          </tr>
+        </table>
       </div>
-    </div>
-    <div id="colorPicker" style="position: absolute; top: 80px; left:650px;">
-      <canvas id="selectedColorCanvas" width="200px" height="200px" style="background-color: rgba( 0, 0, 0, 1); position: absolute; top: 0px; left:0px; z-index:980;"></canvas>
-      <div id="hue" style="position: absolute; top: 00px; left:0px;">
-        <canvas id="hueCanvas" width="200px" height="200px" style="background-color: rgba( 255, 255, 255, 0); position: absolute; top: 0px; left:0px; z-index:990;"></canvas>
-        <canvas id="hueSelect" width="20px" height="20px" style="background-color: rgba( 255, 255, 255, 0); position: absolute; top: 0px; left:0px; z-index:991;"></canvas>
-      </div>
-      <div id="sv" style="position: absolute; top: 50px; left:50px;">
-        <canvas id="svCanvas_1" width="104px" height="104px" style="background-color: rgba( 0, 0, 0, 1); position: absolute; top: -2px; left: -2px; z-index:998;"></canvas>
-        <canvas id="svCanvas_2" width="102px" height="102px" style="background-color: rgba( 255, 255, 255, 1); position: absolute; top: -1px; left:-1px; z-index:999;"></canvas>
-        <canvas id="svCanvas" width="100px" height="100px" style="background-color: rgba( 0, 0, 0, 1); position: absolute; top: 0px; left:0px; z-index:1000;"></canvas>
-        <canvas id="svSelect" width="10px" height="10px" style="background-color: rgba( 0, 0, 0, 0); position: absolute; top: 0px; left:0px; z-index:1001;"></canvas>
-      </div>
-      <table style="position: absolute; top: 00px; left:200px;">
-        <tr>
-          <td colspan=3>HEX</td>
-        </tr>
-        <tr>
-          <td colspan=3><input type="text" id="rgb_hex" style="width:75px"></td>
-        </tr>
-        <tr>
-          <td colspan=3>RGB</td>
-        </tr>
-        <tr>
-          <td><input type="text" id="rgb_r" style="width:40px"></td>
-          <td><input type="text" id="rgb_g" style="width:40px"></td>
-          <td><input type="text" id="rgb_b" style="width:40px"></td>
-        </tr>
-        <tr>
-          <td colspan=3>HSV</td>
-        </tr>
-        <tr>
-          <td><input type="text" id="hsv_h" style="width:40px"></td>
-          <td><input type="text" id="hsv_s" style="width:40px"></td>
-          <td><input type="text" id="hsv_v" style="width:40px"></td>
-        </tr>
-      </table>
-    </div>
-    <div id="colocPalette" style="position: absolute; top: 300px; left:650px;">
-      <div id="palette" style="position: absolute; top: 0px; left:0px;">
-        <canvas id="paletteBackCanvas" width="355px" height="55px" style="background-color: rgba( 255, 255, 255, 255); position: absolute; top: 0px; left:0px; z-index:900;"></canvas>
-        <canvas id="paletteCanvas" width="355px" height="55px" style="background-color: rgba( 255, 255, 255, 0); position: absolute; top: 0px; left:0px; z-index:980;"></canvas>
-        <canvas id="paletteSelect" width="42px" height="22px" style="background-color: rgba( 255, 255, 255, 0); position: absolute; top: 0px; left:0px; z-index:1000;"></canvas>
-      </div>
+      <div id="colocPalette" style="position: absolute; top: 300px; left:0px;">
+        <div id="palette" style="position: absolute; top: 0px; left:0px;">
+          <canvas id="paletteBackCanvas" width="355px" height="55px" style="background-color: rgba( 255, 255, 255, 255); position: absolute; top: 0px; left:0px; z-index:900;"></canvas>
+          <canvas id="paletteCanvas" width="355px" height="55px" style="background-color: rgba( 255, 255, 255, 0); position: absolute; top: 0px; left:0px; z-index:980;"></canvas>
+          <canvas id="paletteSelect" width="42px" height="22px" style="background-color: rgba( 255, 255, 255, 0); position: absolute; top: 0px; left:0px; z-index:1000;"></canvas>
+        </div>
 
-      <div id="eracer" style="position: absolute; top: 60px; left:0px;">
-        <canvas id="toolSelect" width="32px" height="32px" style="background-color: rgba( 255, 255, 255, 0); position: absolute; top: 0px; left:0px; z-index:1000;"></canvas>
+        <div id="eracer" style="position: absolute; top: 60px; left:0px;">
+          <canvas id="toolSelect" width="32px" height="32px" style="background-color: rgba( 255, 255, 255, 0); position: absolute; top: 0px; left:0px; z-index:1000;"></canvas>
 
-        <img id="penIcon"    src="img/pen.png"    width="32px"    height="32px" style="background-color: rgba( 255, 255, 255, 1); position: absolute; top: 0px; left:0px; z-index:900;" />
-        <img id="eracerIcon" src="img/eracer.png" width="32px" height="32px" style="background-color: rgba( 255, 255, 255, 1); position: absolute; top: 0px; left:40px; z-index:900;" />
-        <img id="bucketIcon" src="img/bucket.png" width="32px" height="32px" style="background-color: rgba( 255, 255, 255, 1); position: absolute; top: 0px; left:80px; z-index:900;" />
+          <img id="penIcon"    src="img/pen.png"    width="32px"    height="32px" style="background-color: rgba( 255, 255, 255, 1); position: absolute; top: 0px; left:0px; z-index:900;" />
+          <img id="eracerIcon" src="img/eracer.png" width="32px" height="32px" style="background-color: rgba( 255, 255, 255, 1); position: absolute; top: 0px; left:40px; z-index:900;" />
+          <img id="bucketIcon" src="img/bucket.png" width="32px" height="32px" style="background-color: rgba( 255, 255, 255, 1); position: absolute; top: 0px; left:80px; z-index:900;" />
+        </div>
+      </div>
+      <div id="data" style="position: absolute; top: 650px; left:0px;">
+        <input type="button" onclick="save()" value="save" style="position: absolute; top: 0px; left:0px;"/>
+        <input type="button" onclick="load()" value="load" style="position: absolute; top: 0px; left:50px;"/>
+        <input type="text" id="json" style="position: absolute; top: 0px; left:100px;"/>
       </div>
     </div>
   </div>

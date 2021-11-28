@@ -275,6 +275,8 @@ function rgbhexChange() {
   const rgbHex = document.getElementById('rgb_hex');
   colors[paletteNo] = rgbHex.value.replace("#", "");
   paletteSelected();
+  hueDispRefresh();
+  showColorSelectStat();
   colorChange();
 }
 
@@ -308,8 +310,6 @@ function paletteSelected() {
   if (hsv.s != 0) selectedH = hsv.h;
   selectedS = hsv.s;
   selectedV = hsv.v;
-  hueDispRefresh();
-  showColorSelectStat();
 }
 
 function showColorSelectStat() {
@@ -543,14 +543,13 @@ function drawPalette(canvas, ctx, bCvs, bctx) {
 }
 
 function keydown(e){
-    e.preventDefault();
     const elm = e.target;
     switch(e.keyCode) {
-        case 38: posY--; break; // Å™
-        case 40: posY++; break; // Å´
-        case 37: posX--; break; // Å©
-        case 39: posX++; break; // Å®
-        case 32: mode=1; fill(posX, posY); mode=-1; break;//space
+        case 38: posY--; break; // up
+        case 40: posY++; break; // dn
+        case 37: posX--; break; // l
+        case 39: posX++; break; // r
+        case 32: e.preventDefault(); mode=1; fill(posX, posY); mode=-1; break;//space
         default: break;
     }
     if (posX < 0) posX = 0;
@@ -568,6 +567,8 @@ function paletteClicked(e) {
   paletteSelect.style.top = y * colorHeight;
   paletteNo = y*8+x;
   paletteSelected();
+  hueDispRefresh();
+  showColorSelectStat();
 }
 
 function drawEracer(bCvs, bctx) {
@@ -699,4 +700,59 @@ function hsl2hsv(h, s, l) {
 function hsv2hsl(h, s, v) {
   const rgb = hsv2rgb(h, s, v);
   return rgb2hsl(rgb.r, rgb.g, rgb.b);
+}
+
+function save() {
+  const png = vCanvas.toDataURL('image/png');
+  let json = '{';
+  json += '"palette":' + JSON.stringify(colors);
+  let pictureString = "";
+  for (let y = 0; y < cells; y++) {
+    for (let x = 0; x < cells; x++) {
+      if (field[y][x] == -1) {
+        pictureString += "_";
+      } else {
+        pictureString += field[y][x].toString(16);
+      }
+    }
+    pictureString += "";
+  }
+  json += ', "pict":"' + pictureString + '"';
+  json += '}';
+  console.log(json);
+  document.getElementById('json').value = json;
+  document.cookie = "data=" + json;
+}
+
+function loadFromJsonString(jsonString) {
+  const json = JSON.parse(jsonString);
+  colors = json.palette;
+  for (let p = 0; p < 16; p++) {
+    paletteNo = p;
+    paletteSelected();
+    showColorSelectStat();
+  }
+  mode = 1;
+  for (let y = 0; y < cells; y++) {
+    for (let x = 0; x < cells; x++) {
+      if (json.pict.charAt(y*cells+x) == "_") {
+        paletteNo = -1;
+      } else {
+        paletteNo = parseInt(json.pict.charAt(y*cells+x), 16);
+      }
+      fill(x, y);
+    }
+  }
+  mode = -1;
+  paletteNo = 0;
+  paletteSelected();
+  hueDispRefresh();
+  showColorSelectStat();
+}
+
+function load() {
+  if (document.getElementById('json').value == '') {
+    document.getElementById('json').value = document.cookie.split('; ').find(row => row.startsWith('data')).split('=')[1];
+  }
+  loadFromJsonString(document.getElementById('json').value);
 }
