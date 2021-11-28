@@ -480,6 +480,8 @@ function init() {
   paletteCtx.stroke();
   paletteCanvas.addEventListener('click', paletteClicked, false);
   paletteSelected();
+  hueDispRefresh();
+  showColorSelectStat();
 
 
   toolSelect = document.getElementById('toolSelect');
