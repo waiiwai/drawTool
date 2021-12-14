@@ -546,12 +546,12 @@ function drawPalette(canvas, ctx, bCvs, bctx) {
 
 function keydown(e){
     const elm = e.target;
-    switch(e.keyCode) {
-        case 38: posY--; break; // up
-        case 40: posY++; break; // dn
-        case 37: posX--; break; // l
-        case 39: posX++; break; // r
-        case 32: e.preventDefault(); mode=1; fill(posX, posY); mode=-1; break;//space
+    switch(e.code) {
+        case 'ArrowUp': posY--; break;
+        case 'ArrowDown': posY++; break;
+        case 'ArrowLeft': posX--; break;
+        case 'ArrowRight': posX++; break;
+        case 'Space': e.preventDefault(); mode=1; fill(posX, posY); mode=-1; break;
         default: break;
     }
     if (posX < 0) posX = 0;
